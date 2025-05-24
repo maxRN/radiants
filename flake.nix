@@ -11,13 +11,6 @@
       ...
     }:
     {
-      nixosConfigurations.skybreaker = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          disko.nixosModules.disko
-          ./configuration.nix
-        ];
-      };
       nixosConfigurations.windrunner = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
