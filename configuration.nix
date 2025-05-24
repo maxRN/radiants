@@ -18,15 +18,12 @@
   };
   services.openssh.enable = true;
 
-  services.audiobookshelf = {
-    enable = true;
-    dataDir = "/data/urithiru";
-  };
+  services.audiobookshelf.enable = true;
 
   services.caddy = {
     enable = true;
     virtualHosts."abs.maxrn.dev".extraConfig = ''
-      reverse_proxy http://localhost:8000
+      reverse_proxy http://127.0.0.1:8000
     '';
   };
 
