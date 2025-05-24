@@ -24,8 +24,7 @@
   ];
 
   users.users.root.openssh.authorizedKeys.keys = [
-    # change this to your ssh key
-    "CHANGE"
+    (builtins.readFile ./main.pub)
   ];
 
   system.stateVersion = "24.05";
