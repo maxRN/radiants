@@ -21,7 +21,7 @@
   services.audiobookshelf = {
     enable = true;
     openFirewall = true;
-    dataDir = /data/urithiru;
+    dataDir = "/data/urithiru";
   };
 
   services.caddy = {
