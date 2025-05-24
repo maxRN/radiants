@@ -20,7 +20,6 @@
 
   services.audiobookshelf = {
     enable = true;
-    openFirewall = true;
     dataDir = "/data/urithiru";
   };
 
@@ -29,6 +28,14 @@
     virtualHosts."abs.maxrn.dev".extraConfig = ''
       reverse_proxy http://localhost:8000
     '';
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      80
+      443
+    ];
   };
 
   environment.systemPackages = map lib.lowPrio [
