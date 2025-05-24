@@ -18,6 +18,19 @@
   };
   services.openssh.enable = true;
 
+  services.audiobookshelf = {
+    enable = true;
+    openFirewall = true;
+    dataDir = /data/urithiru;
+  };
+
+  services.caddy = {
+    enable = true;
+    virtualHosts."abs.maxrn.dev".extraConfig = ''
+      reverse_proxy http://localhost:8000
+    '';
+  };
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
