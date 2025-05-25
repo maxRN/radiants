@@ -38,7 +38,19 @@
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
+    pkgs.cifs-utils
   ];
+
+  fileSystems."/mnt/share" = {
+    device = "//u462951.your-storagebox.de/backup";
+    fsType = "cifs";
+    options =
+      let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in
+      [ "${automount_opts},credentials=/etc/nixos/smb-secrets" ];
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     (builtins.readFile ./main.pub)
