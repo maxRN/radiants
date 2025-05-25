@@ -39,6 +39,8 @@
     pkgs.curl
     pkgs.gitMinimal
     pkgs.cifs-utils
+    pkgs.ffmpeg
+    pkgs.id3v2
   ];
 
   fileSystems."/mnt/share" = {
@@ -57,4 +59,9 @@
   ];
 
   system.stateVersion = "24.05";
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }
