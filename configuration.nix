@@ -41,6 +41,7 @@
     pkgs.cifs-utils
     pkgs.ffmpeg
     pkgs.id3v2
+    pkgs.neovim
   ];
 
   fileSystems."/mnt/share" = {
