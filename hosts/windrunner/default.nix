@@ -91,7 +91,10 @@ in
 
   services.borgbackup.jobs.audiobookshelf = {
     paths = "/var/lib/audiobookshelf/metadata/backups";
-    encryption.mode = "/etc/ssh/ssh_host_ed25519_key";
+    encryption = {
+      mode = "keyfile";
+      keyfile = "/etc/ssh/ssh_host_ed25519_key";
+    };
     repo = "/mnt/share/backups/windrunner";
     compression = "auto,zstd";
     startAt = "daily";
