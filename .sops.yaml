@@ -1,7 +1,9 @@
 keys:
   - &windrunner age1a4gafggwkfhfxxl246gc9leyr645z22hhlfew5z50tgwcn9edewq0tcn85
+  - &primary age19p7uhtn9d5eqszn0t8ff2f6n8nuzkx32wzylsvjmhq9gpwjy5p9qenr3sj
 creation_rules:
   - path_regex: hosts/windrunner/secrets.yaml$
     key_groups:
     - age:
       - *windrunner
+      - *primary
