@@ -88,15 +88,4 @@ in
       echo password=$(cat ${config.sops.secrets.storage.path}) > ${smb_secrets}
     '';
   };
-
-  services.borgbackup.jobs.audiobookshelf = {
-    paths = "/var/lib/audiobookshelf/metadata/backups";
-    encryption = {
-      mode = "keyfile";
-      keyfile = "/etc/ssh/ssh_host_ed25519_key";
-    };
-    repo = "/mnt/share/backups/windrunner";
-    compression = "auto,zstd";
-    startAt = "daily";
-  };
 }
