@@ -14,7 +14,7 @@
         system = "aarch64-linux";
         modules = [
           disko.nixosModules.disko
-          ./host/windrunner
+          ./hosts/windrunner
         ];
       };
 
