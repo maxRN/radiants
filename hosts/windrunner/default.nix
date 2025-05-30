@@ -2,7 +2,6 @@
   modulesPath,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
@@ -80,12 +79,8 @@ in
   # This will generate a new key if the key specified above does not exist
   sops.age.generateKey = true;
   # This is the actual specification of the secrets.
-  sops.secrets.storage = { };
-
-  systemd.services."storage-secret" = {
-    script = ''
-      echo username=u462951 > ${smb_secrets}
-      echo password=$(cat ${config.sops.secrets.storage.path}) > ${smb_secrets}
-    '';
+  sops.secrets.storagebox_credentials = {
+    path = smb_secrets;
   };
+
 }
