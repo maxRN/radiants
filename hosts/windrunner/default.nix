@@ -30,7 +30,7 @@ in
       reverse_proxy http://127.0.0.1:8000
     '';
     virtualHosts."change.maxrn.dev".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${lib.toString change_port}
+      reverse_proxy http://127.0.0.1:${toString change_port}
     '';
   };
 
