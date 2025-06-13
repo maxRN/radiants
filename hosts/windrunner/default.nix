@@ -6,6 +6,7 @@
 }:
 let
   smb_secrets = "/etc/nixos/smb-secrets";
+  change_port = 5000;
 in
 {
   imports = [
@@ -28,6 +29,15 @@ in
     virtualHosts."abs.maxrn.dev".extraConfig = ''
       reverse_proxy http://127.0.0.1:8000
     '';
+    virtualHosts."change.maxrn.dev".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${change_port}
+    '';
+  };
+
+  services.changedetection-io = {
+    enable = true;
+    port = change_port;
+    behindProxy = true;
   };
 
   networking.firewall = {
