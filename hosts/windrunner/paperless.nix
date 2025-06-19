@@ -2,7 +2,7 @@ let
   port = 28981;
 in
 {
-  services.paperperless = {
+  services.paperless = {
     enable = true;
   };
 
