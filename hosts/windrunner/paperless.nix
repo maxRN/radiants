@@ -4,6 +4,9 @@ in
 {
   services.paperless = {
     enable = true;
+    settings = {
+      PAPERLESS_URL = "https://paperless.maxrn.dev";
+    };
   };
 
   services.caddy = {
