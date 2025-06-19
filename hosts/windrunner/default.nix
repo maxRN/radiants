@@ -6,13 +6,15 @@
 }:
 let
   smb_secrets = "/etc/nixos/smb-secrets";
-  change_port = 5000;
 in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
+    ./audiobookshelf.nix
+    ./changedetection.nix
+    ./paperless.nix
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -22,22 +24,8 @@ in
   };
   services.openssh.enable = true;
 
-  services.audiobookshelf.enable = true;
-
   services.caddy = {
     enable = true;
-    virtualHosts."abs.maxrn.dev".extraConfig = ''
-      reverse_proxy http://127.0.0.1:8000
-    '';
-    virtualHosts."change.maxrn.dev".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString change_port}
-    '';
-  };
-
-  services.changedetection-io = {
-    enable = true;
-    port = change_port;
-    behindProxy = true;
   };
 
   networking.firewall = {
