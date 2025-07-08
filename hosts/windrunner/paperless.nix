@@ -4,6 +4,7 @@ in
 {
   services.paperless = {
     enable = true;
+    consumptionDir = "/root/dropbox/paperless";
     settings = {
       PAPERLESS_URL = "https://paperless.maxrn.dev";
     };
