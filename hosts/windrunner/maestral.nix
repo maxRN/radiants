@@ -7,7 +7,7 @@ in
   systemd.user.services.maestral = {
     description = "Maestral";
     wantedBy = [ "default.target" ];
-    after = [ maestral_config_service ];
+    after = [ (maestral_config_service + ".service") ];
     serviceConfig = {
       ExecStart = "${pkgs.maestral}/bin/maestral start";
       ExecReload = "${pkgs.util-linux}/bin/kill -HUP $MAINPID";
