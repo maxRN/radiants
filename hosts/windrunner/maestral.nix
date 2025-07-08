@@ -21,11 +21,12 @@ in
     wantedBy = [ "default.target" ];
     script = ''
       echo "running maestral config service!"
-      echo ${builtins.readFile ./maestral.ini} > maestral.ini
+      echo "${builtins.readFile ./maestral.ini}" > maestral.ini
     '';
     serviceConfig = {
       Type = "oneshot";
       WorkingDirectory = config.users.users.root.home + "/.config/maestral/";
+      RemainAfterExit = true;
     };
   };
 
