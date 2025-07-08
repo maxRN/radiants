@@ -5,6 +5,12 @@ let
 in
 
 {
+
+  # This creates the file in /etc and you can symlink it
+  environment.etc."root/.config/maestral/maestral.ini" = {
+    text = builtins.readFile ./maestral.ini;
+    mode = "0644";
+  };
   # see https://github.com/samschott/maestral/issues/992
   systemd.user.services.maestral = {
     description = "Maestral";
@@ -18,8 +24,7 @@ in
       ExecPreStart = [
         "mkdir -p /root/.config/maestral"
         "echo 'executing pre start'"
-        "echo '${builtins.readFile ./maestral.ini}'"
-        "echo '${builtins.readFile ./maestral.ini}' > /root/.config/maestral/maestral.ini"
+        "cat /etc/root/.config/maestral/maestral.ini > /root/.config/maestral/maestral.ini"
       ];
     };
   };
