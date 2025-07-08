@@ -18,7 +18,8 @@ in
 
   systemd.user.services."${maestral_config_service}" = {
     description = "Maestral config file";
-    wantedBy = [ "default.target" ];
+    after = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
     script = ''
       echo "running maestral config service!"
       echo "${builtins.readFile ./maestral.ini}" > maestral.ini
@@ -27,6 +28,7 @@ in
       Type = "oneshot";
       WorkingDirectory = config.users.users.root.home + "/.config/maestral/";
       RemainAfterExit = true;
+      User = "root";
     };
   };
 
