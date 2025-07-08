@@ -21,7 +21,7 @@ in
       ExecReload = "${pkgs.util-linux}/bin/kill -HUP $MAINPID";
       KillMode = "process";
       Restart = "on-failure";
-      ExecPreStart = [
+      ExecStartPre = [
         "mkdir -p /root/.config/maestral"
         "echo 'executing pre start'"
         "cat /etc/root/.config/maestral/maestral.ini > /root/.config/maestral/maestral.ini"
