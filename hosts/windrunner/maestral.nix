@@ -12,7 +12,7 @@ in
     mode = "0644";
   };
   # see https://github.com/samschott/maestral/issues/992
-  systemd.user.services.maestral = {
+  systemd.services.maestral = {
     description = "Maestral";
     wantedBy = [ "default.target" ];
     # after = [ (maestral_config_service + ".service") ];
