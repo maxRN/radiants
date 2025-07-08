@@ -22,9 +22,9 @@ in
       KillMode = "process";
       Restart = "on-failure";
       ExecStartPre = [
-        "mkdir -p /root/.config/maestral"
-        "echo 'executing pre start'"
-        "cat /etc/root/.config/maestral/maestral.ini > /root/.config/maestral/maestral.ini"
+        "${pkgs.bash} -c 'mkdir -p /root/.config/maestral'"
+        "${pkgs.bash} -c 'echo executing pre start'"
+        "${pkgs.cat} /etc/root/.config/maestral/maestral.ini > /root/.config/maestral/maestral.ini"
       ];
     };
   };
