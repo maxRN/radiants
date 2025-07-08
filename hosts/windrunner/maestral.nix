@@ -21,7 +21,7 @@ in
     wantedBy = [ "default.target" ];
     script = ''
       echo "running maestral config service!"
-      cat ${builtins.readFile ./maestral.ini} > maestral.ini
+      echo ${builtins.readFile ./maestral.ini} > maestral.ini
     '';
     serviceConfig = {
       Type = "oneshot";
@@ -29,7 +29,7 @@ in
     };
   };
 
-  sops.secrets.maestral_key = {
+  sops.secrets.maestral_key_file = {
     path = dropbox_auth_key;
   };
 }
