@@ -22,11 +22,11 @@ in
     wantedBy = [ "multi-user.target" ];
     script = ''
       echo "running maestral config service!"
-      echo "${builtins.readFile ./maestral.ini}" > maestral.ini
+      echo "testing" > /root/test.file
+      echo "${builtins.readFile ./maestral.ini}" > /root/.config/maestral/maestral.ini
     '';
     serviceConfig = {
       Type = "oneshot";
-      WorkingDirectory = config.users.users.root.home + "/.config/maestral/";
       RemainAfterExit = true;
       User = "root";
     };
