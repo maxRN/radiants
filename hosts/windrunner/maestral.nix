@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 let
   dropbox_auth_key = config.users.users.root.home + "/.local/share/python_keyring/keyring_pass.cfg";
-  # maestral_config_service = "maestral_config";
 in
 
 {
@@ -25,25 +24,6 @@ in
         "${pkgs.bash}/bin/bash -c 'echo executing pre start'"
         "${pkgs.bash}/bin/bash -c 'cat /etc/root/.config/maestral/maestral.ini > /root/.config/maestral/maestral.ini'"
       ];
-    };
-  };
-
-  systemd.services = {
-    paperless-maestral-integration = {
-      path = [
-        pkgs.curl
-      ];
-      script = ''
-        #!${pkgs.bash}/bin/bash
-        echo moving files...
-        mv /root/dropbox/paperless/* /var/lib/paperless/consume || true # don't care if no files were found
-        echo moved file
-      '';
-      serviceConfig = {
-        User = config.users.users.root.name;
-      };
-      # startAt is special syntax which automatically creates a service file and a timer for that service file
-      startAt = "*:*"; # every minute
     };
   };
 
