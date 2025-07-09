@@ -36,12 +36,13 @@ in
       script = ''
         #!${pkgs.bash}/bin/bash
         echo moving files...
-        mv /root/dropbox/paperless/* /var/lib/paperless/consume
+        mv /root/dropbox/paperless/* /var/lib/paperless/consume || true # don't care if no files were found
         echo moved file
       '';
       serviceConfig = {
         User = config.users.users.root.name;
       };
+      # startAt is special syntax which automatically creates a service file and a timer for that service file
       startAt = "*:*"; # every minute
     };
   };
