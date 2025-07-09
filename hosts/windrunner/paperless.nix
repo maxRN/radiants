@@ -6,6 +6,7 @@ in
     enable = true;
     settings = {
       PAPERLESS_URL = "https://paperless.maxrn.dev";
+      PAPERLESS_OCR_LANGUAGE = "deu+eng";
     };
   };
 

@@ -29,7 +29,7 @@ in
   };
 
   systemd.services = {
-    dynamic-dns-updater = {
+    paperless-maestral-integration = {
       path = [
         pkgs.curl
       ];
