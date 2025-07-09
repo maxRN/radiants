@@ -40,7 +40,7 @@ in
         echo moved file
       '';
       serviceConfig = {
-        User = config.users.users.default.name;
+        User = config.users.users.root.name;
       };
       startAt = "*:0/30";
     };
