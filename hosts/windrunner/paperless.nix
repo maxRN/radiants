@@ -4,7 +4,6 @@ in
 {
   services.paperless = {
     enable = true;
-    consumptionDir = "/var/lib/paperless/consume-dropbox";
     settings = {
       PAPERLESS_URL = "https://paperless.maxrn.dev";
     };
