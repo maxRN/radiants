@@ -2,9 +2,7 @@
 let
   dropbox_auth_key = config.users.users.root.home + "/.local/share/python_keyring/keyring_pass.cfg";
 in
-
 {
-
   # This creates the file in /etc and you can symlink it
   environment.etc."root/.config/maestral/maestral.ini" = {
     text = builtins.readFile ./maestral.ini;
