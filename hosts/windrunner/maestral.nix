@@ -42,7 +42,7 @@ in
       serviceConfig = {
         User = config.users.users.root.name;
       };
-      startAt = "*:0/30";
+      startAt = "*:*"; # every minute
     };
   };
 
