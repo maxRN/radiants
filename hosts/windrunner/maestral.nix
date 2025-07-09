@@ -15,7 +15,6 @@ in
   systemd.services.maestral = {
     description = "Maestral";
     wantedBy = [ "default.target" ];
-    # after = [ (maestral_config_service + ".service") ];
     serviceConfig = {
       ExecStart = "${pkgs.maestral}/bin/maestral start";
       ExecReload = "${pkgs.util-linux}/bin/kill -HUP $MAINPID";
@@ -29,21 +28,23 @@ in
     };
   };
 
-  # systemd.user.services."${maestral_config_service}" = {
-  #   description = "Maestral config file";
-  #   after = [ "multi-user.target" ];
-  #   wantedBy = [ "multi-user.target" ];
-  #   script = ''
-  #     echo "running maestral config service!"
-  #     echo "testing" > /root/test.file
-  #     echo "${builtins.readFile ./maestral.ini}" > /root/.config/maestral/maestral.ini
-  #   '';
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     RemainAfterExit = true;
-  #     User = "root";
-  #   };
-  # };
+  systemd.services = {
+    dynamic-dns-updater = {
+      path = [
+        pkgs.curl
+      ];
+      script = ''
+        #!${pkgs.bash}/bin/bash
+        echo moving files...
+        mv /root/dropbox/paperless/* /var/lib/paperless/consume
+        echo moved file
+      '';
+      serviceConfig = {
+        User = config.users.users.default.name;
+      };
+      startAt = "*:0/30";
+    };
+  };
 
   sops.secrets.maestral_key_file = {
     path = dropbox_auth_key;
