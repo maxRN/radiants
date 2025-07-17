@@ -59,6 +59,7 @@ in
 
   users.users.root.openssh.authorizedKeys.keys = [
     (builtins.readFile ./main.pub)
+    (builtins.readFile ./ohnezahn.pub)
   ];
 
   system.stateVersion = "24.05";
