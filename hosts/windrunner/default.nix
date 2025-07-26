@@ -46,6 +46,7 @@ in
     pkgs.ffmpeg
     pkgs.id3v2
     pkgs.neovim
+    pkgs.tmux
   ];
 
   fileSystems."/mnt/share" = {
@@ -57,7 +58,7 @@ in
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in
       [
-        "${automount_opts},credentials=${smb_secrets},gid=${config.users.groups.networker.gid}"
+        "${automount_opts},credentials=${smb_secrets},gid=${toString config.users.groups.networker.gid}"
       ];
   };
 
