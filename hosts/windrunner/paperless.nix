@@ -1,3 +1,4 @@
+{ nixpkgs-stable, ... }:
 let
   port = 28981;
   config_file = "/var/lib/config-paperless/config";
@@ -6,6 +7,7 @@ in
 {
   services.paperless = {
     enable = true;
+    package = nixpkgs-stable.paperless-ngx;
     consumptionDir = "/var/lib/maestral/paperless";
     environmentFile = config_file;
     passwordFile = password_file;
