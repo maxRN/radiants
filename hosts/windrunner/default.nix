@@ -49,20 +49,23 @@ in
     pkgs.tmux
   ];
 
-  # fileSystems."/mnt/share" = {
-  #   device = "//u462951.your-storagebox.de/backup";
-  #   fsType = "cifs";
-  #   options =
-  #     let
-  #       # this line prevents hanging on network split
-  #       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-  #     in
-  #     [
-  #       "${automount_opts},credentials=${smb_secrets},gid=${toString config.users.groups.networker.gid}"
-  #     ];
-  # };
+  fileSystems."/mnt/share" = {
+    device = "//u462951.your-storagebox.de/backup";
+    fsType = "cifs";
+    options =
+      let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in
+      [
+        "${automount_opts},credentials=${smb_secrets},gid=${toString config.users.groups.networker.gid}"
+      ];
+  };
 
-  users.groups.networker.members = [ config.services.audiobookshelf.user ];
+  users.groups.networker = {
+    members = [ config.services.audiobookshelf.user ];
+    gid = 990;
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     (builtins.readFile ./main.pub)
@@ -89,5 +92,4 @@ in
   sops.secrets.storagebox_credentials = {
     path = smb_secrets;
   };
-
 }

@@ -1,4 +1,4 @@
 {
   nix.optimise.automatic = true;
-  nix.optimise.dates = [ "03:45" ]; 
+  nix.optimise.dates = [ "03:45" ];
 }

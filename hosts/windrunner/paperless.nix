@@ -6,7 +6,7 @@ let
 in
 {
   services.paperless = {
-    enable = true;
+    enable = false;
     package = nixpkgs-stable.paperless-ngx;
     consumptionDir = "/var/lib/maestral/paperless";
     environmentFile = config_file;
