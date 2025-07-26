@@ -7,7 +7,7 @@
       type = "github";
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "bdac72d387dca7f836f6ef1fe547755fb0e9df61";
+      rev = "6b4955211758ba47fac850c040a27f23b9b4008f";
     };
     disko = {
       url = "github:nix-community/disko";
