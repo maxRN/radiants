@@ -2,6 +2,7 @@
   modulesPath,
   lib,
   pkgs,
+  config,
   ...
 }:
 let
@@ -55,8 +56,12 @@ in
         # this line prevents hanging on network split
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in
-      [ "${automount_opts},credentials=${smb_secrets}" ];
+      [
+        "${automount_opts},credentials=${smb_secrets},gid=${config.users.groups.networker.gid}"
+      ];
   };
+
+  users.groups.networker.members = [ config.services.audiobookshelf.user ];
 
   users.users.root.openssh.authorizedKeys.keys = [
     (builtins.readFile ./main.pub)
