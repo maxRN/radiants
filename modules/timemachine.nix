@@ -1,6 +1,8 @@
 { config, ... }:
+let
+  tmPath = "/mnt/share/tm_share";
+in
 {
-
   users.users.samba-user = {
     name = "samba-user";
     isNormalUser = true;
@@ -17,7 +19,7 @@
     openFirewall = true;
     settings = {
       "tm_share" = {
-        "path" = "/mnt/share/tm_share";
+        "path" = tmPath;
         "valid users" = config.users.users.samba-user.name;
         "public" = "no";
         "writeable" = "yes";
@@ -91,4 +93,9 @@
       '';
     };
   };
+
+  # Share path must be owned by the respective unix user. (e.g. ❯ chown -R samba: /samba)
+  systemd.tmpfiles.rules = [
+    "d ${tmPath} 0755 ${config.users.users.samba-user.name} users"
+  ];
 }
