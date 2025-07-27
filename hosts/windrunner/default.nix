@@ -17,6 +17,7 @@ in
     ./changedetection.nix
     ./paperless.nix
     ./maestral.nix
+    ../../modules/timemachine.nix
     ../shared.nix
   ];
   boot.loader.grub = {
