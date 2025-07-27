@@ -3,7 +3,6 @@
 
   users.users.samba-user = {
     name = "samba-user";
-    group = "samba";
     isNormalUser = true;
   };
 
