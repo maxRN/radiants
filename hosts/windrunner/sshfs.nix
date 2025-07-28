@@ -12,6 +12,7 @@
       "_netdev" # this is a network fs
       # "x-systemd.automount" # mount on demand
       "X-mount.group=${config.users.groups.networker.name}"
+      "gid=${toString config.users.groups.networker.gid}"
 
       # SSH options
       "reconnect" # handle connection drops
