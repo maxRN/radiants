@@ -23,6 +23,7 @@ in
         "valid users" = config.users.users.samba-user.name;
         "public" = "no";
         "writeable" = "yes";
+        "read only" = "no";
         "force user" = config.users.users.samba-user.name;
         # Below are the most imporant for macOS compatibility
         # Change the above to suit your needs
