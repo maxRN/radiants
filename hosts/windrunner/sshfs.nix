@@ -14,7 +14,8 @@
       # SSH options
       "reconnect" # handle connection drops
       "ServerAliveInterval=15" # keep connections alive
-      "IdentityFile=/etc/ssh/id_host_ed25519"
+      "IdentityFile=/etc/ssh/ssh_host_ed25519_key"
+      "Port=23"
     ];
   };
 }
