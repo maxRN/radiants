@@ -1,3 +1,4 @@
+{ config, ... }:
 let
   port = 8000;
 in
@@ -9,4 +10,6 @@ in
       reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
+
+  services.storagebox.members = [ config.services.audiobookshelf.user ];
 }

@@ -2,7 +2,6 @@
   modulesPath,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
@@ -19,7 +18,7 @@ in
     ./maestral.nix
     ../../modules/timemachine.nix
     ../shared.nix
-    ./sshfs.nix
+    ./storagebox.nix.nix
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -32,6 +31,8 @@ in
   services.caddy = {
     enable = true;
   };
+
+  services.storagebox.enable = true;
 
   networking.firewall = {
     enable = true;
@@ -49,25 +50,9 @@ in
     pkgs.id3v2
     pkgs.neovim
     pkgs.tmux
+    pkgs.ripgrep
+    pkgs.inetutils
   ];
-
-  fileSystems."/mnt/share" = {
-    device = "//u462951.your-storagebox.de/backup";
-    fsType = "cifs";
-    options =
-      let
-        # this line prevents hanging on network split
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in
-      [
-        "${automount_opts},credentials=${smb_secrets},gid=${toString config.users.groups.networker.gid}"
-      ];
-  };
-
-  users.groups.networker = {
-    members = [ config.services.audiobookshelf.user ];
-    gid = 990;
-  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     (builtins.readFile ./main.pub)
