@@ -69,11 +69,9 @@ in
         "IdentityFile=${cfg.sshKey}"
       ];
     };
+    users.groups.networker = {
+      members = cfg.members;
+      gid = 990;
+    };
   };
-
-  users.groups.networker = {
-    members = cfg.members;
-    gid = 990;
-  };
-
 }
