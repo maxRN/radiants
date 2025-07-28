@@ -11,7 +11,7 @@
       "allow_other" # for non-root access
       "_netdev" # this is a network fs
       # "x-systemd.automount" # mount on demand
-      "X-mount.group=${config.users.groups.netwoker.name}"
+      "X-mount.group=${config.users.groups.networker.name}"
 
       # SSH options
       "reconnect" # handle connection drops
