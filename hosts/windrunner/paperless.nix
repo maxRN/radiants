@@ -6,7 +6,7 @@ let
 in
 {
   services.paperless = {
-    enable = false;
+    enable = true;
     package = paperless-pkgs.paperless-ngx;
     consumptionDir = "/var/lib/maestral/paperless";
     environmentFile = config_file;
