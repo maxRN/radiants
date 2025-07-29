@@ -11,7 +11,7 @@ in
     consumptionDir = "/var/lib/maestral/paperless";
     environmentFile = config_file;
     passwordFile = password_file;
-    dataDir = config.services.storagebox.mntPoint + "/paperless";
+    dataDir = config.services.storagebox.mountPoint + "/paperless";
     settings = {
       PAPERLESS_URL = "https://paperless.maxrn.dev";
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
