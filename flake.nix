@@ -2,12 +2,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    # paperless-pkgs = {
-    #   type = "github";
-    #   owner = "nixos";
-    #   repo = "nixpkgs";
-    #   rev = "6b4955211758ba47fac850c040a27f23b9b4008f";
-    # };
     paperless-pkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     disko = {
       url = "github:nix-community/disko";
