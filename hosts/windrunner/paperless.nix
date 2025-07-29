@@ -1,4 +1,4 @@
-{ paperless-pkgs, ... }:
+{ paperless-pkgs, config, ... }:
 let
   port = 28981;
   config_file = "/var/lib/config-paperless/config";
@@ -11,6 +11,7 @@ in
     consumptionDir = "/var/lib/maestral/paperless";
     environmentFile = config_file;
     passwordFile = password_file;
+    dataDir = config.services.storagebox.mntPoint + "/paperless";
     settings = {
       PAPERLESS_URL = "https://paperless.maxrn.dev";
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
@@ -23,6 +24,8 @@ in
       reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
+
+  services.storagebox.members = [ config.services.paperless.user ];
 
   sops.secrets.paperless_config = {
     path = config_file;
