@@ -10,7 +10,7 @@ in
   options.services.timemachine = {
     enable = mkEnableOption "Time machine SMB share";
   };
-  config = lib.mkIf cfg.enabled {
+  config = lib.mkIf cfg.enable {
     users.users.samba-user = {
       name = "samba-user";
       isNormalUser = true;
