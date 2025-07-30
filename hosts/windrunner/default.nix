@@ -42,6 +42,8 @@ in
     ];
   };
 
+  services.timemachine.enable = false;
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
