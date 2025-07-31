@@ -56,7 +56,6 @@ in
       options = [
 
         "nodev" # Prevents device files from being interpreted on this filesystem (security) (source: claude)
-        "noatime" # Doesn't update access times when files are read (performance optimization) (source: claude)
 
         "allow_other" # for non-root access
         "_netdev" # this is a network fs
