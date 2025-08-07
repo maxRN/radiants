@@ -4,9 +4,6 @@
   pkgs,
   ...
 }:
-let
-  smb_secrets = "/etc/nixos/smb-secrets";
-in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -19,6 +16,7 @@ in
     ../shared.nix
     ./timemachine.nix
     ./storagebox.nix
+    ./tailscale.nix
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -77,8 +75,4 @@ in
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
   # This will generate a new key if the key specified above does not exist
   sops.age.generateKey = true;
-  # This is the actual specification of the secrets.
-  sops.secrets.storagebox_credentials = {
-    path = smb_secrets;
-  };
 }

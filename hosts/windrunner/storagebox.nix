@@ -73,4 +73,7 @@ in
       gid = 990;
     };
   };
+  sops.secrets.storagebox_credentials = {
+    path = "/etc/nixos/smb-secrets";
+  };
 }
