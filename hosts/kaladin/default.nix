@@ -14,7 +14,6 @@
     ./paperless.nix
     ./maestral.nix
     ../shared.nix
-    ./timemachine.nix
     ./storagebox.nix
     ./tailscale.nix
   ];
@@ -46,8 +45,6 @@
   };
 
   networking.hostName = "kaladin";
-
-  services.timemachine.enable = false;
 
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
