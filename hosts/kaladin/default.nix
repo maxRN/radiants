@@ -18,13 +18,18 @@
     ./storagebox.nix
     ./tailscale.nix
   ];
+
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
     # devices = [ ];
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
-  services.openssh.enable = true;
+
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+  };
 
   services.caddy = {
     enable = true;

@@ -22,7 +22,7 @@
       ...
     }:
     {
-      nixosConfigurations.windrunner = nixpkgs.lib.nixosSystem rec {
+      nixosConfigurations.kaladin = nixpkgs.lib.nixosSystem rec {
         system = "aarch64-linux";
         specialArgs = {
           nixpkgs-stable = import nixpkgs-stable { inherit system; };
@@ -31,7 +31,7 @@
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
-          ./hosts/windrunner
+          ./hosts/kaladin
         ];
       };
 
