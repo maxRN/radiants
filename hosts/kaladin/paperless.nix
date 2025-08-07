@@ -13,7 +13,8 @@ in
     passwordFile = password_file;
     dataDir = config.services.storagebox.mountPoint + "/paperless";
     settings = {
-      PAPERLESS_URL = "https://paperless.maxrn.dev";
+      # PAPERLESS_URL = "https://paperless.maxrn.dev";
+      PAPERLESS_URL = "https://kaladin.diplodocus-barley.ts.net";
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
     };
   };
