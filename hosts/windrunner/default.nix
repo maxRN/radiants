@@ -40,6 +40,8 @@
     ];
   };
 
+  networking.hostName = "kaladin";
+
   services.timemachine.enable = false;
 
   environment.systemPackages = map lib.lowPrio [
