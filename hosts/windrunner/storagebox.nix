@@ -72,8 +72,8 @@ in
       members = cfg.members;
       gid = 990;
     };
-  };
-  sops.secrets.storagebox_credentials = {
-    path = "/etc/nixos/smb-secrets";
+    sops.secrets.storagebox_credentials = {
+      path = "/etc/nixos/smb-secrets";
+    };
   };
 }
