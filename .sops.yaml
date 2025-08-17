@@ -3,7 +3,7 @@ keys:
   - &primary age19p7uhtn9d5eqszn0t8ff2f6n8nuzkx32wzylsvjmhq9gpwjy5p9qenr3sj
   - &ohnezahn age17x4dh9q0ucp698sgvl7npx478js0uw05kte4pffrn6cmfxdsf94q4vlkse
 creation_rules:
-  - path_regex: hosts/windrunner/secrets.yaml$
+  - path_regex: hosts/kaladin/secrets.yaml$
     key_groups:
     - age:
       - *windrunner

@@ -16,6 +16,7 @@
     ../shared.nix
     ./storagebox.nix
     ./tailscale.nix
+    ./pocket-id.nix
   ];
 
   boot.loader.grub = {
