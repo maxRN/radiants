@@ -3,7 +3,11 @@ let
   port = 8000;
 in
 {
+
+  imports = [ ./refreshToken.nix ];
+
   services.audiobookshelf.enable = true;
+  services.audiobookshelf.REFRESH_TOKEN_EXPIRY = 42 * 24 * 60 * 60; # 42 days
 
   services.caddy = {
     virtualHosts."abs.maxrn.dev".extraConfig = ''

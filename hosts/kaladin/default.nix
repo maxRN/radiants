@@ -9,7 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
-    ./audiobookshelf.nix
+    ./audiobookshelf
     ./changedetection.nix
     ./paperless.nix
     ./maestral.nix
