@@ -7,7 +7,7 @@ in
   services.pocket-id.enable = true;
   services.pocket-id.settings = {
     TRUST_PROXY = true;
-    APP_URL = "https://pocket-id.maxrn.dev";
+    APP_URL = "https://auth.maxrn.dev";
     ENCRYPTION_KEY_FILE = encryption_key_file;
   };
 
@@ -18,7 +18,7 @@ in
   };
 
   services.caddy = {
-    virtualHosts."pocket-id.maxrn.dev".extraConfig = ''
+    virtualHosts."auth.maxrn.dev".extraConfig = ''
       reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
