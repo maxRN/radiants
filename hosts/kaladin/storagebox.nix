@@ -57,6 +57,8 @@ in
 
         "nodev" # Prevents device files from being interpreted on this filesystem (security) (source: claude)
 
+        "use_ino" # maybe this fixes audiobooks not showing up in ABS?
+
         "allow_other" # for non-root access
         "_netdev" # this is a network fs
         # "x-systemd.automount" # mount on demand

@@ -47,7 +47,13 @@
 
   networking.hostName = "kaladin";
 
+  programs.fish.enable = true;
+  programs.fish.shellInit = ''
+    set fish_greeting
+  '';
+  users.defaultUserShell = pkgs.fish;
   environment.systemPackages = map lib.lowPrio [
+    pkgs.fish
     pkgs.curl
     pkgs.gitMinimal
     pkgs.cifs-utils
