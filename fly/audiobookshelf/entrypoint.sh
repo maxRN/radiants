@@ -78,4 +78,6 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
+crond -b -l 8
+
 exec tini -s -- "$@"

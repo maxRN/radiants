@@ -19,7 +19,7 @@ swap_size_mb = 512
   RCLONE_CONFIG_BOX_SHELL_TYPE = 'unix'
 
 [[mounts]]
-  source = 'abs_data'
+  source = 'abs_migrate'
   destination = '/data'
 
 [http_service]
@@ -39,4 +39,4 @@ swap_size_mb = 512
 
 [[vm]]
   size = 'shared-cpu-1x'
-  memory = '256mb'
+  memory = '512mb'
