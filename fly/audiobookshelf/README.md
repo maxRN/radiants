@@ -2,9 +2,54 @@
 
 Fly deployment for `abs.maxrn.dev`, migrated from the NixOS host `kaladin`.
 
+- **App**: `radiants-abs` — https://radiants-abs.fly.dev
 - **App config/DB**: Fly volume at `/data` (`/data/config`, `/data/metadata`)
 - **Media**: Hetzner Storage Box mounted at `/mnt/ssh` via rclone SFTP (same path as on kaladin)
-- **Machine**: `shared-cpu-1x` 256MB + 512MB swap in `fra`
+- **Machine**: `shared-cpu-1x` 256MB + 512MB swap in `fra`, always on
+
+## Migration status
+
+### Done
+
+- [x] Fly app deployed and healthy (`radiants-abs`)
+- [x] 10GB volume in `fra` with config, DB, metadata, and cover cache
+- [x] Storage Box SSH key registered; rclone mount working
+- [x] Data migrated from kaladin (slim archive + `metadata/cache/covers` and `cache/images`)
+- [x] Login, streaming, and cover art verified on `radiants-abs.fly.dev`
+- [x] Fly config committed in `fly/audiobookshelf/`
+- [x] TLS cert requested: `fly certs add abs.maxrn.dev`
+
+### Remaining
+
+- [ ] **DNS cutover** — `abs.maxrn.dev` still points at kaladin (`128.140.121.222`). Update DNS:
+
+  | Type | Name | Value |
+  |------|------|-------|
+  | A | `abs` | `66.241.124.86` |
+  | AAAA | `abs` | `2a09:8280:1::131:eedc:0` |
+
+  Then verify:
+
+  ```bash
+  fly certs check abs.maxrn.dev -a radiants-abs
+  ```
+
+  Test https://abs.maxrn.dev (login, streaming, progress).
+
+- [ ] **Decommission kaladin ABS** (after DNS is stable for a few days) — remove `./audiobookshelf` from [`hosts/kaladin/default.nix`](../../hosts/kaladin/default.nix) and run `nixos-rebuild switch --flake .#kaladin`. Keep [`storagebox.nix`](../../hosts/kaladin/storagebox.nix); paperless still uses the mount.
+
+- [ ] **Push commit** — `main` has the Fly deployment commit; push when ready.
+
+### Optional cleanup
+
+- Delete temp archives on kaladin: `/tmp/abs-data*.tgz`, `/tmp/abs-cache-covers.tgz` (~7GB)
+- Remove local `abs-fly-storagebox*` and `abs-data*.tgz` from `fly/audiobookshelf/` (gitignored)
+
+### Rollback
+
+Point the `abs` A record back to `128.140.121.222` (kaladin). The NixOS ABS service is still running until decommissioned.
+
+---
 
 ## Prerequisites
 
@@ -107,6 +152,20 @@ fly ssh console -a radiants-abs -C "mountpoint /mnt/ssh && ls /mnt/ssh | head"
 
 ## 6. Import migrated config/DB
 
+One-time migration — already completed. To import cover cache separately:
+
+```bash
+# on kaladin
+tar czf /tmp/abs-cache-covers.tgz -C /var/lib/audiobookshelf/metadata/cache covers images
+
+# copy to fly volume and extract
+fly ssh sftp put abs-cache-covers.tgz /data/abs-cache-covers.tgz -a radiants-abs
+fly ssh console -a radiants-abs -C "tar xzf /data/abs-cache-covers.tgz -C /data/metadata/cache && rm /data/abs-cache-covers.tgz"
+```
+
+<details>
+<summary>Original slim archive import (already done)</summary>
+
 Stop the machine so ABS isn't writing the database:
 
 ```bash
@@ -117,12 +176,7 @@ fly machine stop <machine-id> -a radiants-abs
 Copy the archive into the volume and extract:
 
 ```bash
-fly ssh sftp shell -a radiants-abs
-# In the sftp shell:
-put abs-data-slim.tgz /data/abs-data-slim.tgz
-```
-
-```bash
+fly ssh sftp put abs-data-slim.tgz /data/abs-data-slim.tgz -a radiants-abs
 fly ssh console -a radiants-abs -C "tar xzf /data/abs-data-slim.tgz -C /data && rm /data/abs-data-slim.tgz"
 ```
 
@@ -131,6 +185,8 @@ Start the machine again:
 ```bash
 fly machine start <machine-id> -a radiants-abs
 ```
+
+</details>
 
 ## 7. Test on fly.dev
 
@@ -145,17 +201,19 @@ Trigger a manual library scan if needed (Settings → Libraries → Scan).
 
 ## 8. Cutover to abs.maxrn.dev
 
-Only after testing is successful:
+Cert is already requested. Add these DNS records at your `maxrn.dev` provider:
 
-```bash
-fly certs add abs.maxrn.dev -a radiants-abs
-```
+| Type | Name | Value |
+|------|------|-------|
+| A | `abs` | `66.241.124.86` |
+| AAAA | `abs` | `2a09:8280:1::131:eedc:0` |
 
-Fly will show the DNS records to add. Point `abs.maxrn.dev` at Fly (typically a CNAME to `radiants-abs.fly.dev` or the A/AAAA records Fly provides).
+Remove the old A record pointing at kaladin (`128.140.121.222`).
 
 Verify TLS:
 
 ```bash
+fly certs check abs.maxrn.dev -a radiants-abs
 fly certs show abs.maxrn.dev -a radiants-abs
 ```
 
@@ -193,8 +251,11 @@ Library folders in the ABS database must use `/mnt/ssh/...` paths (matching kala
 
 ## Cost estimate
 
+Always-on (`auto_stop_machines = 'off'`):
+
 | Resource | Approx. monthly |
 |----------|-----------------|
-| shared-cpu-1x 256MB (fra) | ~$1.94 |
+| shared-cpu-1x 256MB (fra) | ~$2.20 |
 | 10GB volume | ~$1.50 |
 | Egress (after 100GB free) | $0.02/GB |
+| **Total fixed** | **~$3.50–4** |
