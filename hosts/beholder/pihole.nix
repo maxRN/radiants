@@ -31,7 +31,6 @@
           "192.168.1.53 wifi.internal"
           "192.168.1.55 pc.max.internal"
           "192.168.1.1 edge.internal"
-          "192.168.178.1 fritz.internal"
           "192.168.1.92 mbp.internal"
         ];
       };
