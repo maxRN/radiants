@@ -2,8 +2,7 @@
 # (https://blinks.diplodocus-barley.ts.net). Same unit as on Raspbian, so the
 # state dir (/var/lib/private/blinks) carries over as is.
 #
-# /etc/blinks/env (BLINKS_PASSWORD, BLINKS_API_KEY) is copied over by hand, not
-# managed here. Move it to sops once beholder's host key exists.
+# BLINKS_PASSWORD and BLINKS_API_KEY come from the sops secret blinks_env (dotenv).
 {
   config,
   lib,
@@ -15,6 +14,8 @@ let
   port = 8082;
 in
 {
+  sops.secrets.blinks_env.restartUnits = [ "blinks.service" ];
+
   systemd.services.blinks = {
     description = "blinks link inbox";
     after = [ "network.target" ];
@@ -26,7 +27,7 @@ in
     };
     serviceConfig = {
       ExecStart = lib.getExe blinks.packages.${pkgs.stdenv.hostPlatform.system}.default;
-      EnvironmentFile = "/etc/blinks/env";
+      EnvironmentFile = config.sops.secrets.blinks_env.path;
       DynamicUser = true;
       StateDirectory = "blinks";
       Restart = "on-failure";

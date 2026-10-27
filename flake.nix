@@ -49,7 +49,10 @@
       nixosConfigurations.beholder = nixpkgs-beholder.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = { inherit blinks; };
-        modules = [ ./hosts/beholder ];
+        modules = [
+          sops-nix.nixosModules.sops
+          ./hosts/beholder
+        ];
       };
 
       packages.aarch64-linux.beholder-sd-image = self.nixosConfigurations.beholder.config.system.build.sdImage;

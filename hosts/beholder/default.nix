@@ -71,6 +71,10 @@
     (builtins.readFile ../kaladin/ohnezahn.pub)
   ];
 
+  # Decrypted with the host key; its age recipient is &beholder in .sops.yaml.
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   zramSwap.enable = true;
 
   environment.systemPackages = map lib.lowPrio [
