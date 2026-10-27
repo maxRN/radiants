@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "blinks": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-beholder"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793008968,
+        "narHash": "sha256-Ffr+oaQ/jvbVxgC1qfgsbxh5ufrZPHsKDyHvdr5RiGk=",
+        "ref": "listen-addr",
+        "rev": "abe4619cd0fa0b8d03689edc2d0f21ed863ea18d",
+        "revCount": 8,
+        "type": "git",
+        "url": "file:///Users/maxrn/code/blinks"
+      },
+      "original": {
+        "ref": "listen-addr",
+        "type": "git",
+        "url": "file:///Users/maxrn/code/blinks"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -32,6 +53,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-beholder": {
+      "locked": {
+        "lastModified": 1793015021,
+        "narHash": "sha256-Ee5BWo8sh3pGt70QUdRajnaginqFmWvrtdBc4gJzhks=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "718f670e845328e9c2cecdd832835712b2cbd065",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -70,8 +107,10 @@
     },
     "root": {
       "inputs": {
+        "blinks": "blinks",
         "disko": "disko",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-beholder": "nixpkgs-beholder",
         "nixpkgs-stable": "nixpkgs-stable",
         "paperless-pkgs": "paperless-pkgs",
         "sops-nix": "sops-nix"
