@@ -21,6 +21,9 @@
   # Ship the image uncompressed so it can be dd'd directly.
   sdImage.compressImage = false;
 
+  # The installer profile behind the SD image enables ZFS; nothing here uses it.
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+
   # The onboard NIC hangs off USB, so its predictable name would be path-based
   # (enu1u1u1 or similar). Keep eth0, which pihole's dns.interface refers to too.
   networking.usePredictableInterfaceNames = false;
