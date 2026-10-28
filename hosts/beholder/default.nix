@@ -16,6 +16,7 @@
     ../shared.nix
     ./pihole.nix
     ./blinks.nix
+    ./rex.nix
   ];
 
   # Ship the image uncompressed so it can be dd'd directly.
