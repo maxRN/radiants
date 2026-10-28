@@ -71,8 +71,8 @@
   };
 
   users.users.root.openssh.authorizedKeys.keys = [
-    (builtins.readFile ../kaladin/main.pub)
-    (builtins.readFile ../kaladin/ohnezahn.pub)
+    (builtins.readFile ./main.pub)
+    (builtins.readFile ./ohnezahn.pub)
   ];
 
   # Decrypted with the host key; its age recipient is &beholder in .sops.yaml.

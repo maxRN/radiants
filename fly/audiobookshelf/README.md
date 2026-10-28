@@ -1,6 +1,6 @@
 # Audiobookshelf on Fly.io
 
-Fly deployment for `abs.maxrn.dev`, migrated from the NixOS host `kaladin`.
+Fly deployment for `abs.maxrn.dev`, migrated from the former NixOS host `kaladin`.
 
 - **App**: `radiants-abs` — https://radiants-abs.fly.dev
 - **App config/DB**: Fly volume at `/data` (`/data/config`, `/data/metadata`)
@@ -9,52 +9,30 @@ Fly deployment for `abs.maxrn.dev`, migrated from the NixOS host `kaladin`.
 
 ## Migration status
 
-### Done
+Complete. `abs.maxrn.dev` points at Fly, and kaladin has been removed from this repo.
 
 - [x] Fly app deployed and healthy (`radiants-abs`)
 - [x] 10GB volume in `fra` with config, DB, metadata, and cover cache
 - [x] Storage Box SSH key registered; rclone mount working
 - [x] Data migrated from kaladin (slim archive + `metadata/cache/covers` and `cache/images`)
 - [x] Login, streaming, and cover art verified on `radiants-abs.fly.dev`
-- [x] Fly config committed in `fly/audiobookshelf/`
-- [x] TLS cert requested: `fly certs add abs.maxrn.dev`
-
-### Remaining
-
-- [ ] **DNS cutover** — `abs.maxrn.dev` still points at kaladin (`128.140.121.222`). Update DNS:
-
-  | Type | Name | Value |
-  |------|------|-------|
-  | A | `abs` | `66.241.124.86` |
-  | AAAA | `abs` | `2a09:8280:1::131:eedc:0` |
-
-  Then verify:
-
-  ```bash
-  fly certs check abs.maxrn.dev -a radiants-abs
-  ```
-
-  Test https://abs.maxrn.dev (login, streaming, progress).
-
-- [ ] **Decommission kaladin ABS** (after DNS is stable for a few days) — remove `./audiobookshelf` from [`hosts/kaladin/default.nix`](../../hosts/kaladin/default.nix) and run `nixos-rebuild switch --flake .#kaladin`. Keep [`storagebox.nix`](../../hosts/kaladin/storagebox.nix); paperless still uses the mount.
-
-- [ ] **Push commit** — `main` has the Fly deployment commit; push when ready.
+- [x] Fly config committed in `fly/audiobookshelf/` and pushed
+- [x] TLS cert for `abs.maxrn.dev`
+- [x] DNS cutover: `abs` A/AAAA records point at Fly (see [step 8](#8-cutover-to-absmaxrndev))
+- [x] kaladin decommissioned
 
 ### Optional cleanup
 
-- Delete temp archives on kaladin: `/tmp/abs-data*.tgz`, `/tmp/abs-cache-covers.tgz` (~7GB)
 - Remove local `abs-fly-storagebox*` and `abs-data*.tgz` from `fly/audiobookshelf/` (gitignored)
 
-### Rollback
-
-Point the `abs` A record back to `128.140.121.222` (kaladin). The NixOS ABS service is still running until decommissioned.
-
 ---
+
+The steps below are the original migration from kaladin, kept for reference. Steps 2 and 6
+ran on kaladin, which no longer exists.
 
 ## Prerequisites
 
 - [flyctl](https://fly.io/docs/hands-on/install-flyctl/) installed and authenticated (`fly auth login`)
-- SSH access to kaladin
 - Ability to add an SSH public key to the Hetzner Storage Box
 
 ## 1. Storage Box SSH key
@@ -217,11 +195,9 @@ fly certs check abs.maxrn.dev -a radiants-abs
 fly certs show abs.maxrn.dev -a radiants-abs
 ```
 
-## 9. Decommission kaladin ABS (after cutover)
+## 9. Decommission kaladin
 
-In [hosts/kaladin/default.nix](../hosts/kaladin/default.nix), remove the `./audiobookshelf` import and redeploy kaladin with `nixos-rebuild switch`.
-
-Keep the Storage Box mount on kaladin if other services (e.g. paperless) still use it.
+Done: kaladin's whole NixOS config has been removed from this repo.
 
 ## Troubleshooting
 
