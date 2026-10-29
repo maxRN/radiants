@@ -55,9 +55,15 @@
   services.tailscale = {
     enable = true;
     openFirewall = true;
-    # Keep 100.100.100.100 out of /etc/resolv.conf, see networking.nameservers.
-    extraSetFlags = [ "--accept-dns=false" ];
+    extraSetFlags = [
+      # Keep 100.100.100.100 out of /etc/resolv.conf, see networking.nameservers.
+      "--accept-dns=false"
+      "--ssh"
+    ];
   };
+  # Forwarding off until the Tailscale SSH privilege-escalation fixes ship:
+  # https://tailscale.com/ssh-investigation-update
+  systemd.services.tailscaled.environment.TS_SSH_DISABLE_FORWARDING = "1";
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
 
   # Reachable on the LAN too, for when tailscale is down.
