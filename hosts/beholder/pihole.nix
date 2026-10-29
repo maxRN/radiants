@@ -25,14 +25,13 @@
         interface = "eth0";
         listeningMode = "ALL";
         rateLimit.count = 3000;
-        # Static leases for these live on the UniFi Express (DHCP range .100-.254).
+        # Static leases for these live on the UniFi Express (Home DHCP range .30-.254).
         hosts = [
           "10.10.0.1 unifi.internal"
-          "10.10.0.2 edge.internal"
           "10.10.0.4 beholder.internal"
           "10.10.0.4 pi.hole"
-          "10.10.0.55 pc.max.internal"
-          "10.10.0.92 mbp.internal"
+          "10.10.10.2 pc.max.internal"
+          "10.10.10.3 pc.anni.internal"
         ];
       };
       webserver.headers = [
