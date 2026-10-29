@@ -92,6 +92,11 @@
 
   zramSwap.enable = true;
 
+  # The Pi has frozen hard (no logs, nothing answering) and stayed dead until
+  # power-cycled. Let the hardware watchdog reset it instead. The BCM2835 timer
+  # tops out just under 16s.
+  systemd.settings.Manager.RuntimeWatchdogSec = "15s";
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.dig
