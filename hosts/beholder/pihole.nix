@@ -1,5 +1,6 @@
 # Pi-hole as it ran on Raspbian (v6.5, settings marked "### CHANGED" in
 # /etc/pihole/pihole.toml as of 2026-10-27). DHCP stays with the router (UniFi Express).
+{ pkgs, ... }:
 {
   services.pihole-ftl = {
     enable = true;
@@ -43,6 +44,11 @@
       ];
     };
   };
+
+  # Setup runs after FTL and rebuilds gravity.db (minutes on the Pi 3); FTL keeps the stale
+  # backup open until told to reload, so nothing gets blocked after a reboot.
+  systemd.services.pihole-ftl-setup.serviceConfig.ExecStartPost =
+    "+${pkgs.systemd}/bin/systemctl kill -s RTMIN pihole-ftl.service";
 
   services.pihole-web = {
     enable = true;
