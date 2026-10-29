@@ -46,9 +46,10 @@
   };
 
   # Setup runs after FTL and rebuilds gravity.db (minutes on the Pi 3); FTL keeps the stale
-  # backup open until told to reload, so nothing gets blocked after a reboot.
-  systemd.services.pihole-ftl-setup.serviceConfig.ExecStartPost =
-    "+${pkgs.systemd}/bin/systemctl kill -s RTMIN pihole-ftl.service";
+  # backup open until told to reload, so nothing gets blocked after a reboot. StopPost, because
+  # setup exits 1 on every run (re-adding the existing list fails) though gravity is fine.
+  systemd.services.pihole-ftl-setup.serviceConfig.ExecStopPost =
+    "-+${pkgs.systemd}/bin/systemctl kill -s RTMIN pihole-ftl.service";
 
   services.pihole-web = {
     enable = true;
