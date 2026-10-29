@@ -9,8 +9,8 @@
     queryLogDeleter.enable = true;
     lists = [
       {
-        url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-        description = "Steven Black's unified adlist";
+        url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
+        description = "HaGeZi Multi PRO";
       }
     ];
     settings = {
