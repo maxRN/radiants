@@ -1,5 +1,5 @@
 # Pi-hole as it ran on Raspbian (v6.5, settings marked "### CHANGED" in
-# /etc/pihole/pihole.toml as of 2026-10-27). DHCP stays with the router.
+# /etc/pihole/pihole.toml as of 2026-10-27). DHCP stays with the router (UniFi Express).
 {
   services.pihole-ftl = {
     enable = true;
@@ -25,13 +25,14 @@
         interface = "eth0";
         listeningMode = "ALL";
         rateLimit.count = 3000;
+        # Static leases for these live on the UniFi Express (DHCP range .100-.254).
         hosts = [
-          "192.168.1.4 beholder.internal"
-          "192.168.1.4 pi.hole"
-          "192.168.1.53 wifi.internal"
-          "192.168.1.55 pc.max.internal"
-          "192.168.1.1 edge.internal"
-          "192.168.1.92 mbp.internal"
+          "10.10.0.1 unifi.internal"
+          "10.10.0.2 edge.internal"
+          "10.10.0.4 beholder.internal"
+          "10.10.0.4 pi.hole"
+          "10.10.0.55 pc.max.internal"
+          "10.10.0.92 mbp.internal"
         ];
       };
       webserver.headers = [

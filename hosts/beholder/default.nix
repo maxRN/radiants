@@ -1,4 +1,4 @@
-# Raspberry Pi 3B (1 GB RAM): LAN DNS via Pi-hole on 192.168.1.4.
+# Raspberry Pi 3B (1 GB RAM): LAN DNS via Pi-hole on 10.10.0.4.
 #
 # Too little RAM to evaluate its own config, so it's always built elsewhere
 # (ohnezahn's linux-builder) and deployed with ./deploy.sh. Imports the stock
@@ -34,12 +34,12 @@
     useDHCP = false;
     interfaces.eth0.ipv4.addresses = [
       {
-        address = "192.168.1.4";
+        address = "10.10.0.4";
         prefixLength = 24;
       }
     ];
     defaultGateway = {
-      address = "192.168.1.1";
+      address = "10.10.0.1";
       interface = "eth0";
     };
     # Not itself: the Pi must resolve even when pihole-FTL is down.
