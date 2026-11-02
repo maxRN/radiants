@@ -15,12 +15,8 @@
     ];
     settings = {
       dns = {
-        upstreams = [
-          "8.8.8.8"
-          "8.8.4.4"
-          "208.67.222.222"
-          "208.67.220.220"
-        ];
+        # Unbound, which forwards over DNS-over-TLS (unbound.nix).
+        upstreams = [ "127.0.0.1#5335" ];
         domainNeeded = true;
         expandHosts = true;
         interface = "eth0";

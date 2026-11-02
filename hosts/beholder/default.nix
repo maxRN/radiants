@@ -15,6 +15,7 @@
     (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
     ../shared.nix
     ./pihole.nix
+    ./unbound.nix
     ./blinks.nix
     ./rex.nix
   ];
